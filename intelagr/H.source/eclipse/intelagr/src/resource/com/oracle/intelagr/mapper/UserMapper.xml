@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.intelagr.mapper.UserMapper">
+	<resultMap type="User" id="userMapper">
+		<id column="id" property="id" />
+		<result column="userID" property="userID" />
+		<result column="password" property="password" />
+		<result column="userName" property="userName" />
+		<result column="userType" property="userType" />
+		<result column="companyCode" property="companyCode" />
+		<result column="companyName" property="companyName" />
+		<result column="tel" property="tel" />
+		<result column="email" property="email" />
+		<result column="loginStatus" property="loginStatus" />
+		<result column="lastSignTime" property="lastSignTime" />
+		<result column="deleteFlag" property="deleteFlag" />
+		<collection property="roles" ofType="Role">
+			<result column="roleCode" property="roleCode" />
+			<result column="roleName" property="roleName" />
+			<result column="remark" property="remark" />
+			<result column="deleteFlag" property="deleteFlag" />
+			<collection property="functions" ofType="Function">
+				<result column="moduleCode" property="moduleCode" />
+				<result column="moduleName" property="moduleName" />
+				<result column="moduleDispSeq" property="moduleDispSeq" />
+				<result column="functionCode" property="functionCode" />
+				<result column="functionName" property="functionName" />
+				<result column="functionDispSeq" property="functionDispSeq" />
+				<result column="functionURL" property="functionURL" />
+				<result column="functionIcon" property="functionIcon" />
+			</collection>
+		</collection>
+	</resultMap>
+	<select id="select" resultMap="userMapper" parameterType="java.util.Map">
+		select * from m_user 
+		<where>
+			<if test="userID!=null and userID!=''">
+				and userID = #{userID}
+			</if>
+			<if test="password!=null and password!=''">
+				and password = #{password}
+			</if>
+			<if test="userName!=null and userName!=''">
+				and userName = #{userName}
+			</if>
+			<if test="userType!=null and userType!=''">
+				and userType = #{userType}
+			</if>
+			and deleteFlag = 'N'
+		</where>
+		<if test="index!=null">
+			limit #{index},#{pageSize}
+		</if>
+	</select>
+	<select id="selectById" resultMap="userMapper" parameterType="java.lang.String">
+		select * from m_user u
+		left outer join m_userrolemap ur on u.UserID=ur.UserID
+		left outer join m_rolefunctionmap rf on rf.RoleCode = ur.RoleCode
+		left outer join m_function f on f.FunctionCode = rf.FunctionCode
+		where u.userID = #{id} and u.deleteFlag = 'N'
+	</select>
+	<select id="count" resultType="int" parameterType="java.util.Map">
+		select count(*) from m_user 
+		<where>
+			<if test="userID!=null and userID!=''">
+				and userID = #{userID}
+			</if>
+			<if test="password!=null and password!=''">
+				and password = #{password}
+			</if>
+			<if test="userName!=null and userName!=''">
+				and userName = #{userName}
+			</if>
+			<if test="userType!=null and userType!=''">
+				and userType = #{userType}
+			</if>
+			and deleteFlag = 'N'
+		</where>
+	</select>
+	<insert id="insert" parameterType="User">
+		insert into m_user
+		values (default,#{userID},#{password},#{userName},#{userType},#{companyCode},#{companyName},#{tel},#{email},'01',null,#{remark},'N',#{createUserId},#{createDate},#{updateUserId},#{updateDate})
+	</insert>
+	<update id="update" parameterType="User">
+		update m_user
+		<set>
+			<if test="userID!=null and userID!=''">
+				userID=#{userID},
+			</if>
+			<if test="password!=null and password!=''">
+				password=#{password},
+			</if>
+			<if test="userName!=null and userName!=''">
+				userName=#{userName},
+			</if>
+			<if test="userType!=null and userType!=''">
+				userType=#{userType},
+			</if>
+			<if test="companyCode!=null and companyCode!=''">
+				companyCode=#{companyCode},
+			</if>
+			<if test="companyName!=null and companyName!=''">
+				companyName=#{companyName},
+			</if>
+			<if test="tel!=null and tel!=''">
+				tel=#{tel},
+			</if>
+			<if test="email!=null and email!=''">
+				email=#{email},
+			</if>
+			<if test="userID!=null and userID!=''">
+				userID=#{userID},
+			</if>
+			<if test="loginStatus!=null and loginStatus!=''">
+				loginStatus=#{loginStatus},
+			</if>
+			<if test="lastSignTime!=null">
+				lastSignTime=#{lastSignTime},
+			</if>
+			<if test="remark!=null and remark!=''">
+				remark=#{remark},
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				deleteFlag=#{deleteFlag},
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				updateUserId=#{updateUserId},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+		where userID=#{userID}
+	</update>
+</mapper>

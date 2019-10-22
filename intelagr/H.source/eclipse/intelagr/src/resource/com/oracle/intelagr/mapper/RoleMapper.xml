@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.intelagr.mapper.RoleMapper">
+	<resultMap type="Role" id="roleMapper">
+		<id column="id" property="id" />
+		<result column="roleCode" property="roleCode" />
+		<result column="roleName" property="roleName" />
+		<result column="remark" property="remark" />
+		<result column="deleteFlag" property="deleteFlag" />
+		<collection property="functions" ofType="Function"
+		resultMap="com.oracle.intelagr.mapper.FunctionMapper.functionMapper"></collection>
+	</resultMap>
+	<select id="selectAll" resultMap="roleMapper">
+		select * from m_role where deleteFlag = 'N'
+	</select>
+	<select id="select" resultMap="roleMapper" parameterType="java.util.Map">
+		select * from m_role
+		<where>
+			<if test="roleCode!=null and roleCode !=''">
+				and roleCode = #{roleCode}
+			</if>
+			<if test="roleName!=null and roleName !=''">
+				and roleName = #{roleName}
+			</if>
+			and deleteFlag = 'N'
+		</where>
+		limit #{index},#{pageSize}
+	</select>
+	<select id="count" resultType="int" parameterType="java.util.Map">
+		select count(*) from m_role
+		<where>
+			<if test="roleCode!=null and roleCode !=''">
+				and roleCode = #{roleCode}
+			</if>
+			<if test="roleName!=null and roleName !=''">
+				and roleName = #{roleName}
+			</if>
+			and deleteFlag='N'
+		</where>
+	</select>
+	<select id="selectById" resultMap="roleMapper" parameterType="int">
+		select * from m_role
+		where id = #{id} and deleteFlag='N'
+	</select>
+	<insert id="insert" parameterType="Role">
+		insert into m_role
+		values (default,#{roleCode},#{roleName},#{remark},'N',#{createUserId},#{createDate},#{updateUserId},#{updateDate})
+	</insert>
+	<update id="update" parameterType="Role">
+		update m_role
+		<set>
+			<if test="roleCode!=null and uroleCode!=''">
+				roleCode=#{roleCode},
+			</if>
+			<if test="roleName!=null and roleName!=''">
+				roleName=#{roleName},
+			</if>
+			<if test="remark!=null and remark!=''">
+				remark=#{remark},
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				deleteFlag=#{deleteFlag},
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				updateUserId=#{updateUserId},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>

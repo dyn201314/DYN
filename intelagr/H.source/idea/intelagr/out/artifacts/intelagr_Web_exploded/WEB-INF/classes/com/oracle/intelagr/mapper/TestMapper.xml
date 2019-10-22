@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.intelagr.mapper.CompanyMapper">
+	<resultMap type="Company" id="companyMap">
+		<id column="id" property="id" />
+		<result column="companyCode" property="companyCode" />
+		<result column="companyName" property="companyName" />
+		<result column="legalPerson" property="legalPerson" />
+		<result column="legalPersonID" property="legalPersonID" />
+		<result column="address" property="address" />
+		<result column="registerDate" property="registerDate" />
+		<result column="connectName" property="connectName" />
+		<result column="connectPhone" property="connectPhone" />
+	</resultMap>
+ 	<select id="select" resultMap="companyMap" parameterType="java.util.Map">
+ 		select * from m_company
+ 		<where>
+ 			<if test="companyCode!=null and companyCode!=''">
+ 				and companyCode = #{companyCode}
+ 			</if>
+ 			<if test="companyType!=null and companyType!=''">
+ 				and companyType = #{companyType}
+ 			</if>
+ 		</where>
+ 	</select>
+
+</mapper>

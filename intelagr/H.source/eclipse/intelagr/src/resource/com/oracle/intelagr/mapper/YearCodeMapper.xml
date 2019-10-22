@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.intelagr.mapper.YearCodeMapper">
+	<resultMap type="YearCode" id="yearMap">
+		<id column="id" property="id" />
+		<result column="yearCode" property="yearCode" />
+		<result column="yearName" property="yearName" />
+	</resultMap>
+ 	<select id="select" resultMap="yearMap" parameterType="java.util.Map">
+ 		select * from m_year
+ 		<where>
+ 			<if test="yearCode!=null and yearCode!=''">
+ 				and yearCode = #{yearCode}
+ 			</if>
+ 		</where>
+ 	</select>
+
+</mapper>

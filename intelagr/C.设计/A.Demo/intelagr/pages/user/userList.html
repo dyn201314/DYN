@@ -1,0 +1,363 @@
+   
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="width:100%;height:100%;overflow:hidden">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>用户管理-五常优质水稻溯源监管平台</title>
+<link rel="stylesheet" type="text/css" href="../../style/index.css">
+<link rel="stylesheet" type="text/css" href="../../js/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../js/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../../js/themes/color.css">
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../js/form2js.js"></script>
+<script type="text/javascript" src="../../js/json2.js"></script>
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+</head>
+<body class="easyui-layout">
+	<div region="center" border="false" style="padding:5px;">	
+		<fieldset id="queryBlock" class="fieldset_common_style">
+			<form id="userform" name="userform" method="post" action="../../user/list?flag=2">
+				<table class="table_common_style">
+					<tr>
+						<td class="table_common_td_label_query_style">用户名：</td>
+						<td class="table_common_td_txt_query_style">
+							<input name="userID" value="" class="easyui-textbox" style="width:200px;height:25px;">
+							<input type='hidden' id="pageTotal" name="pageTotal" value="8" />
+							<input type="hidden" id="page" name="page" value="1">
+							<input type="hidden" id="pageSize" name="pageSize" value="15">
+						</td>
+						<td class="table_common_td_label_query_style">用户姓名：</td>
+						<td class="table_common_td_txt_query_style">
+							<input name="userName" value="" class="easyui-textbox" style="width:200px;height:25px">
+						</td>
+					</tr>
+					<tr>
+						<td class="table_common_td_label_query_style">用户类型：</td>
+						<td class="table_common_td_txt_query_style">
+							
+
+		<select id="type" name="type" class="easyui-combobox" style="width:200px;height:25px" data-options="editable:true">
+<option value="" selected>-=请选择=-</option>
+			<option value="01">系统管理员</option>
+
+			<option value="02">企业</option>
+
+			<option value="03">农业局</option>
+
+			<option value="04">种子管理站</option>
+
+			<option value="05">农经总站</option>
+
+			<option value="06">质监局</option>
+
+			<option value="07">种子经销商</option>
+
+		</select>
+
+		 <script type="text/javascript">
+
+			 $(document).ready(function(){ 
+
+				 $('#type').combobox({ 
+
+					 onChange:function(newValue,oldValue){
+
+						 return false;
+
+					 } 
+
+				 });
+
+
+			 });
+
+		</script>
+
+						</td>
+						<td colspan="2" align="right" valign="bottom">
+	                       	<a href="#" class="easyui-linkbutton" onclick="onSubmit()">
+	                       	<span class="l-btn-left"><span class="l-btn-text icon-search l-btn-icon-left">查询</span></span></a>
+	             		</td>
+					</tr>
+				</table>
+			</form>
+		</fieldset>
+		<fieldset id="toolBlock" class="fieldset_common_style">
+			<table>
+				<tr>
+					<td>
+						<a href="#" class="easyui-linkbutton" onclick="detail();">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-view l-btn-icon-left">查看</span>
+							</span>
+						</a>
+						<a href="#" class="easyui-linkbutton" onclick="addUser();">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-add l-btn-icon-left">添加</span>
+							</span>
+						</a>
+						<a href="#" class="easyui-linkbutton" onclick="editUser();">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-edit l-btn-icon-left">修改</span>
+							</span>
+						</a>
+						<a href="#" class="easyui-linkbutton" onclick="deleteUser();">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-remove l-btn-icon-left">删除</span>
+							</span>
+						</a>
+						<a href="#" class="easyui-linkbutton" onclick="resetPassword();">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-lock l-btn-icon-left">重置密码</span>
+							</span>
+						</a>
+						<a href="#" class="easyui-linkbutton" onclick="setLoginStatus('01');">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-redo l-btn-icon-left">启用</span>
+							</span>
+						</a>
+						<a href="#" class="easyui-linkbutton" onclick="setLoginStatus('02');">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-cancel l-btn-icon-left">禁用</span>
+							</span>
+						</a>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+		<table id="data" class="easyui-datagrid" striped="true" checkbox="true" singleSelect="true" pageSize="15" pageNumber="1">
+			<thead>
+				<tr>
+					<th field="id" width="150" checkbox="true"  align="center"></th>
+					<th field="userId" width="150"  align="center">用户名</th>
+					<th field="realName" width="150" align="center">姓名</th>
+					<th field="userType" width="150"  align="center">用户类型</th>
+					<th field="companyCode" width="300"  align="center">单位名称</th>
+					<th field="tel" width="200" align="center">手机</th>
+					<th field="email" width="200" align="center">邮箱</th>
+					<th field="loginStatus" width="150" align="center">状态</th>
+					<th field="remark" width="150" align="center">备注</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				
+				<tr>
+					<td height="30" align="center" nowrap>14</td>
+					<td height="30" align="center" nowrap>cszy</td>
+					<td height="30" align="center" nowrap>长盛种业</td>
+					<td height="30" align="center" nowrap><span>企业</span></td>
+					<td height="30" align="center" nowrap>五常市长盛种业有限公司</td>
+					<td height="30" align="center" nowrap>15801044315</td>
+					<td height="30" align="center" nowrap>1@qq.com</td>
+					<td height="30" align="center" nowrap><span>正常</span></td>
+					<td height="30" align="center" nowrap></td>
+				</tr>
+				
+				<tr>
+					<td height="30" align="center" nowrap>13</td>
+					<td height="30" align="center" nowrap>jfly</td>
+					<td height="30" align="center" nowrap>金福粮油</td>
+					<td height="30" align="center" nowrap><span>企业</span></td>
+					<td height="30" align="center" nowrap>五常市金福粮油有限公司</td>
+					<td height="30" align="center" nowrap>13910909090</td>
+					<td height="30" align="center" nowrap>123@abc.com</td>
+					<td height="30" align="center" nowrap><span>正常</span></td>
+					<td height="30" align="center" nowrap></td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	<div id="addDialog"></div>
+<script type="text/javascript">
+	var winHeight = $(window).height();
+	var queryBlockHeight = $("#queryBlock").height();
+	var toolBlock = $("#toolBlock").height();
+
+	$(document).ready(function(){
+		$("#data").datagrid({
+			height:winHeight -queryBlockHeight -toolBlock-45,
+			pagination: true,
+	        rownumbers: true,
+	        fitColumns: false,
+	        //fit: true,
+	        pageList: [15,20,25],
+	        pagePosition: "top"
+	});
+	
+	var pagger = $('#data').datagrid('getPager');  
+	$(pagger).pagination({
+		total: $("#pageTotal").val(),
+		pageNumber: parseInt($("#page").val()),
+		showPageList: true,
+		showRefresh: false,
+	    onSelectPage: function(pageNumber, pageSize){
+	    	$('#page').val(pageNumber);
+	    	$('#pageSize').val(pageSize);
+	    	onSubmit();
+	    }
+	});
+});
+	
+function addUser(){
+	$('#addDialog').dialog({
+	    title: '添加新用户',
+	    width: 580,
+	    height: 310,
+	    closed: false,
+	    cache: false,
+	    href: 'addUser.html',
+	    modal: true
+	});
+}
+
+function editUser(){
+	var rows = $('#data').datagrid('getSelections');
+	var length = rows.length;
+	if(length == 0)
+	{
+		$.messager.alert('警告','至少选择一个用户。','warning');
+		return false;
+	}
+	if(length > 1)
+	{
+		$.messager.alert('警告','只能选择一个用户。','warning');
+		return false;
+	}
+	var id = rows[0].id;
+	if(rows[0].userId == 'admin'){
+		$.messager.alert('警告','管理员账号不能修改。','warning');
+		return false;
+	}
+	$('#addDialog').dialog({
+	    title: '修改用户信息',
+	    width: 580,
+	    height: 310,
+	    closed: false,
+	    cache: false,
+	    href: '../../user/editUserInit?id='+id,
+	    modal: true
+	});
+}
+
+function resetPassword(){
+	var rows = $('#data').datagrid('getSelections');
+	var length = rows.length;
+	if(length == 0)
+	{
+		$.messager.alert('警告','至少选择一个用户。','warning');
+		return false;
+	}
+	if(length > 1)
+	{
+		$.messager.alert('警告','只能选择一个用户。','warning');
+		return false;
+	}
+	var id = rows[0].id;
+	$('#addDialog').dialog({
+	    title: '重置密码',
+	    width: 320,
+	    height: 200,
+	    closed: false,
+	    cache: false,
+	    href: 'editPass.html?id='+id,
+	    modal: true
+	});
+}
+
+function detail(){
+	var rows = $('#data').datagrid('getSelections');
+	var length = rows.length;
+	if(length == 0)
+	{
+		$.messager.alert('警告','至少选择一个用户。','warning');
+		return false;
+	}
+	if(length > 1)
+	{
+		$.messager.alert('警告','只能选择一个用户。','warning');
+		return false;
+	}
+	var id = rows[0].id;
+	$('#addDialog').dialog({
+	    title: '查看用户信息',
+	    width: 550,
+	    height: 290,
+	    closed: false,
+	    cache: false,
+	    href: '../../user/detail?id='+id,
+	    modal: true
+	});
+}
+
+function deleteUser(){
+	var ids = [];
+	var rows = $('#data').datagrid('getSelections');
+	var length = rows.length;
+	for(var i=0; i<rows.length; i++) ids.push(rows[i].id);
+	if(ids.length == 0){
+		$.messager.alert('警告','至少选择一个用户。','warning');
+		return false;
+	}
+	if(rows[0].userId == 'admin'){
+		$.messager.alert('警告','管理员账号不能删。','warning');
+		return false;
+	}
+	$.messager.confirm("确认", "您确认删除选定的记录吗？", function (deleteAction) {
+		if (deleteAction) {
+			showLoading();
+			Public.ajaxGet('delete', {ids : ids}, function(e) {
+				hideLoading();
+				if (200 == e.status) {
+					$.messager.alert('提示','操作成功。','info');
+					$('#userform').submit();
+				} else
+					$.messager.alert('错误',e.msg,'error');
+			});
+		}
+	});
+}
+
+function setLoginStatus(loginStatus){
+	var rows = $('#data').datagrid('getSelections');
+	var length = rows.length;
+	if(length == 0)
+	{
+		$.messager.alert('警告','至少选择一个用户。','warning');
+		return false;
+	}
+	if(length > 1)
+	{
+		$.messager.alert('警告','管理员账号不能删。','warning');
+		return false;
+	}
+	if(rows[0].userId == 'admin'){
+		$.messager.alert('警告','管理员账号不支持此操作。','warning');
+		return false;
+	}
+	var id = rows[0].id;
+	showLoading();
+	Public.ajaxGet('../../user/setLoginStatus', {loginStatus : loginStatus, id : id}, function(e) {
+		hideLoading();
+		if (200 == e.status) {
+			$.messager.alert('提示','操作成功。','info');
+			$('#userform').submit();
+		} else
+			$.messager.alert('错误',e.msg,'error');
+	});
+}
+
+function onSubmit(){
+	showLoading();
+	$('#userform').submit();
+}
+</script>
+</body>
+</html>

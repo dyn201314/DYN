@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.intelagr.mapper.InputRegMapper">
+	<resultMap type="InputReg" id="inputRegMapper">
+		<id column="id" property="id" />
+		<result column="year" property="year" />
+		<result column="companyCode" property="companyCode" />
+		<result column="companyName" property="companyName" />
+		<result column="applyBatchNo" property="applyBatchNo" />
+		<result column="inputGoodsName" property="inputGoodsName" />
+		<result column="inputGoodsSupplier" property="inputGoodsSupplier" />
+		<result column="purchaseQuantity" property="purchaseQuantity" />
+		<result column="inputGoodsUnit" property="inputGoodsUnit" />
+		<result column="purchasePerson" property="purchasePerson" />
+		<result column="purchaseDate" property="purchaseDate" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="InputReg" useGeneratedKeys="true" 
+				keyProperty="id" keyColumn="id">
+		insert into b_inputreg
+		values (default,#{year},#{companyCode},#{companyName},#{applyBatchNo},
+		#{inputGoodsName},#{inputGoodsSupplier},#{purchaseQuantity},#{inputGoodsUnit},
+		#{purchasePerson},#{purchaseDate},#{remark},'N',#{createUserId},#{createDate},#{updateUserId},#{updateDate})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.intelagr.mapper.FileMapper">
+	<resultMap type="MFile" id="fileMap">
+		<id column="id" property="id" />
+		<result column="bizType" property="bizType" />
+		<result column="bizCode" property="bizCode" />
+		<result column="extField1" property="extField1" />
+		<result column="extField2" property="extField2" />
+		<result column="fileType" property="fileType" />
+		<result column="originalName" property="originalName" />
+		<result column="filePath" property="filePath" />
+		<result column="fileInfo" property="fileInfo" />
+	</resultMap>
+	<select id="select" resultMap="fileMap" parameterType="java.util.Map">
+		select * from tb_file 
+		<where>
+			<if test="bizType!=null and bizType!=''">
+				and bizType = #{bizType}
+			</if>
+			<if test="bizCode!=null and bizCode!=''">
+				and bizCode = #{bizCode}
+			</if>
+			<if test="filePath!=null and filePath!=''">
+				and filePath = #{filePath}
+			</if>
+			and deleteFlag = 'N'
+		</where>
+	</select>
+	<insert id="insert" parameterType="MFile">
+		insert into tb_file
+		values (default,#{bizType},#{bizCode},#{extField1},#{extField2},#{fileType},#{originalName},#{filePath},#{fileInfo},#{remark},#{deleteFlag},#{createUserId},#{createDate},#{updateUserId},#{updateDate})
+	</insert>
+	<update id="update" parameterType="MFile">
+		update tb_file
+		<set>
+			<if test="bizType!=null and bizType!=''">
+				bizType=#{bizType},
+			</if>
+			<if test="bizCode!=null and bizCode!=''">
+				bizCode=#{bizCode},
+			</if>
+			<if test="extField1!=null and extField1!=''">
+				extField1=#{extField1},
+			</if>
+			<if test="extField2!=null and extField2!=''">
+				extField2=#{extField2},
+			</if>
+			<if test="fileType!=null and fileType!=''">
+				fileType=#{fileType},
+			</if>
+			<if test="originalName!=null and originalName!=''">
+				originalName=#{originalName},
+			</if>
+			<if test="filePath!=null and filePath!=''">
+				filePath=#{filePath},
+			</if>
+			<if test="fileInfo!=null and fileInfo!=''">
+				fileInfo=#{fileInfo},
+			</if>
+			<if test="remark!=null and remark!=''">
+				remark=#{remark},
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				deleteFlag=#{deleteFlag},
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				updateUserId=#{updateUserId},
+			</if>
+			<if test="updateDate!=null">
+				updateDate=#{updateDate},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>

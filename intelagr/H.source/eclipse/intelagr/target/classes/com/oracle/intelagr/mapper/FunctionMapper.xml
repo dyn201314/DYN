@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.intelagr.mapper.FunctionMapper">
+	<resultMap type="Function" id="functionMapper">
+		<id column="id" property="id" />
+		<result column="moduleCode" property="moduleCode" />
+		<result column="moduleName" property="moduleName" />
+		<result column="moduleDispSeq" property="moduleDispSeq" />
+		<result column="functionCode" property="functionCode" />
+		<result column="functionName" property="functionName" />
+		<result column="functionDispSeq" property="functionDispSeq" />
+		<result column="functionURL" property="functionURL" />
+		<result column="functionIcon" property="functionIcon" />
+
+	</resultMap>
+	<select id="selectAll" resultMap="functionMapper">
+		select * from m_function
+	</select>
+</mapper>

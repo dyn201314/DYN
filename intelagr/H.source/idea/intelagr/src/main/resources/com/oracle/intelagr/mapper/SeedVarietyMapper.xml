@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.intelagr.mapper.SeedVarietyMapper">
+	<resultMap type="SeedVariety" id="seedVarietyMap">
+		<id column="id" property="id" />
+		<result column="seedCode" property="seedCode" />
+		<result column="seedName" property="seedName" />
+	</resultMap>
+ 	<select id="select" resultMap="seedVarietyMap" parameterType="java.util.Map">
+ 		select * from m_seedvariety
+ 		<where>
+ 			<if test="seedCode!=null and seedCode!=''">
+ 				and seedCode = #{seedCode}
+ 			</if>
+ 		</where>
+ 	</select>
+
+</mapper>

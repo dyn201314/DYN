@@ -1,0 +1,25 @@
+.yiz-slider-1 {height: 200px;width: 800px;float: left;position: relative; overflow: hidden;}
+.yiz-slider-1 ul {margin: 0px;padding: 0px; float: left;height: auto;list-style-type: none;display: block; position: absolute;top: 0;left: 0; z-index: 98;}
+.yiz-slider-1 ul li {height: auto;width: 100%;float: left;padding: 0px;margin: 0px;float:left;}
+.yiz-slider-1 ul li img{ width: 100%;z-index:1;}
+.yiz-page-btn {float: left;width: auto;height: 30px; position: absolute; bottom: 20px; right: 20px; z-index: 99}
+.yiz-page-btn span{opacity: 0.7;height: 30px;width: 30px;background-color: #999;display: block;float: left;line-height: 30px;text-align: center;color: #FFF;margin-right: 10px;cursor:pointer; }
+.yiz-page-btn .current {background-color: #1D5D76;opacity: 1;}
+
+.yiz-slider-0 {height: 200px;width: 800px;float: left;position: relative; overflow: hidden;}
+.yiz-slider-0 ul {margin: 0px;padding: 0px; float: left;height: auto;list-style-type: none;display: block; position: absolute;top: 0;left: 0; z-index: 98;}
+.yiz-slider-0 ul li {height: auto;width: 100%;float: left;padding: 0px;margin: 0px;float:left;}
+.yiz-slider-0 ul li img{ width: 100%;z-index:1;}
+
+.yiz-slider-3 {height: 400px;width: 300px;float: left;position: relative; overflow: hidden;}
+.yiz-slider-3 ul {margin: 0px;padding: 0px; float: left;height: auto;list-style-type: none;display: block; position: absolute;top: 0;left: 0; z-index: 98;}
+.yiz-slider-3 ul li {height: auto;width: 100%;float: left;padding: 0px;margin: 0px;float:left;}
+.yiz-slider-3 ul li img{ width: 100%;z-index:1;}
+
+
+.yiz-slider-2 {height: 200px;width: 800px;float: left;position: relative; overflow: hidden;}
+.yiz-slider-2 ul {margin: 0px;padding: 0px; float: left;height: auto;list-style-type: none;display: block; position: absolute;top: 0;left: 0; z-index: 98;}
+.yiz-slider-2 ul li {height: auto;width: 100%;float: left;padding: 0px;margin: 0px;float:left;}
+.yiz-slider-2 ul li img{ width: 100%;z-index:1;}
+.yiz-leftarrow{background: url(../images/left-arrow.png); display: block;height: 87px; width: 56px;position:absolute; left: 0; top:50%;z-index: 99; cursor:pointer; margin-top: -43px}
+.yiz-rightarrow{background: url(../images/right-arrow.png); display: block;height: 87px; width: 56px;position:absolute; right: 0; top:50%;z-index: 99; cursor:pointer;margin-top: -43px}

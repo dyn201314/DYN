@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd
+       http://www.springframework.org/schema/mvc 
+       http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd     
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+       
+    <!-- SpringMVC中实现Annotation自动识别请求和装载模型数据 -->
+    <mvc:annotation-driven/>	
+	<!-- 开启SpringMVC的Annotation配置模式 -->
+	<context:annotation-config />
+	<!-- 扫描指定包中的Annotion相关配置 -->
+	<context:component-scan base-package="com.oracle.intelagr.controller"/>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    	<property name="prefix" value="/pages/"></property>
+    	<property name="suffix" value=".jsp"></property>
+    </bean>
+    <mvc:resources mapping="/js/**" location="/js/" /> 
+    <mvc:resources mapping="/style/**" location="/style/" /> 
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <bean id="multipartResolver" class="com.oracle.intelagr.common.CommonsMultipartResolverExt">
+    	<property name="maxInMemorySize" value="40960" />
+    	<property name="maxUploadSize" value="5242880" />  
+        <property name="defaultEncoding" value="UTF-8"></property>  
+        <property name="uploadTempDir" value="uploadtmp" />  
+    </bean> 
+    <mvc:interceptors>
+    	<mvc:interceptor>
+    		<mvc:mapping path="/**"/>
+    		<bean class="com.oracle.intelagr.common.CommonInterceptor">
+    			<property name="allowURLs">
+    				<list>
+    					<value>/user/login</value>
+    				</list>
+    			</property>
+    		</bean>
+    	</mvc:interceptor>
+    </mvc:interceptors>
+    
+</beans>

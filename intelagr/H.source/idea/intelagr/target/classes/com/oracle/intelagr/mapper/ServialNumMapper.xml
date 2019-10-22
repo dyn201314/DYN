@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.intelagr.mapper.ServialNumMapper">
+	<resultMap type="ServialNum" id="ServialNumMap">
+		<id column="id" property="id" />
+		<result column="pTNo" property="pTNo" />
+		<result column="tXNo" property="tXNo" />
+		<result column="sLNo" property="sLNo" />
+		<result column="tRNo" property="tRNo" />
+		<result column="bgNo" property="bgNo" />
+	</resultMap>
+ 	<select id="select" resultMap="ServialNumMap" >
+ 		select * from b_servial_num
+ 	</select>
+ 	<select id="selectById" resultMap="ServialNumMap" parameterType="int">
+ 		select * from b_servial_num where id = #{id}
+ 	</select>
+	<update id="update" parameterType="ServialNum">
+		update b_servial_num 
+		<set>
+			<if test="pTNo!=null">
+				pTNo=#{pTNo},
+			</if>
+			<if test="tXNo!=null">
+				tXNo=#{tXNo},
+			</if>
+			<if test="sLNo!=null">
+				sLNo=#{sLNo},
+			</if>
+			<if test="tRNo!=null">
+				tRNo=#{tRNo},
+			</if>
+			<if test="bgNo!=null">
+				bgNo=#{bgNo},
+			</if>
+		</set>
+		where id=#{id} 
+	</update>
+</mapper>
